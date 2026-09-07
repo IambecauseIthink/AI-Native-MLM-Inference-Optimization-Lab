@@ -6,13 +6,12 @@
 
 ## 从这里开始
 
-1. 阅读 [Roadmap](ROADMAP.md) 与 [弹性学习计划](LEARNING_PLAN.md)。
-2. 打开 [当前 Sprint](sprints/001-prefill-decode.md)，先写预测，再运行 CPU 公式示例。
-3. 用 [研究笔记](templates/research-note.md) 记录因果链，用 [实验模板](templates/experiment.md) 封存协议。
-4. 按 [Benchmark 合同](benchmarks/README.md) 收集真实结果，经质量门槛再比较 Pareto。
-5. 每个 Sprint 留下一段自己的解释和下一步最小实验。
+**直接进入 [六节带学课程](courses/README.md)，从 [第 01 课](courses/01/README.md) 开始。** 对助手说“带我学第 01 课”，不需要先读完知识库或准备 GPU。
+
+每次 30–45 分钟：服务现象 → 预测 → 交互实验 → 必要原理 → 源码 → 复盘。[当前进度](courses/progress.md) 保存暂停恢复点；[Roadmap](ROADMAP.md) 和 [学习计划](LEARNING_PLAN.md) 是长期参考。
 
 ```bash
+python3 scripts/lab.py lesson --id 01
 python3 -m unittest discover -s tests -v
 python3 scripts/lab.py kv --layers 32 --kv-heads 8 --head-dim 128 --tokens 8192 --batch 4 --bytes 2
 python3 scripts/lab.py workload --count 20 --output /tmp/lab-workload.jsonl

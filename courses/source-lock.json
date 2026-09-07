@@ -1,0 +1,119 @@
+{
+  "repository": "https://github.com/vllm-project/vllm",
+  "tag": "v0.19.0",
+  "commit": "2a69949bdadf0e8942b7a1619b229cb475beef20",
+  "verified_on": "2026-09-07",
+  "verification": "AST symbol and file SHA256, no runtime execution",
+  "lessons": {
+    "01": [
+      {
+        "file": "vllm/v1/engine/async_llm.py",
+        "symbol": "AsyncLLM.generate",
+        "line": 529,
+        "end_line": 638,
+        "sha256": "b101a3cd5ea4b7d0cf1852824d8fc96ec8c6a83c0396aad54ad9c1c8d69442c3",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/v1/engine/async_llm.py#L529"
+      },
+      {
+        "file": "vllm/v1/engine/async_llm.py",
+        "symbol": "AsyncLLM.add_request",
+        "line": 288,
+        "end_line": 403,
+        "sha256": "b101a3cd5ea4b7d0cf1852824d8fc96ec8c6a83c0396aad54ad9c1c8d69442c3",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/v1/engine/async_llm.py#L288"
+      }
+    ],
+    "02": [
+      {
+        "file": "vllm/v1/worker/gpu_model_runner.py",
+        "symbol": "GPUModelRunner.execute_model",
+        "line": 3770,
+        "end_line": 4120,
+        "sha256": "3afc290d3df1be3df1b89b9b35942695f5896c7729f608d6c44580899212c301",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/v1/worker/gpu_model_runner.py#L3770"
+      }
+    ],
+    "03": [
+      {
+        "file": "vllm/v1/core/kv_cache_manager.py",
+        "symbol": "KVCacheManager.allocate_slots",
+        "line": 257,
+        "end_line": 427,
+        "sha256": "0df69b7626195cbaabb33013d1e05ba6660243369171367f87313e4221bfffc8",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/v1/core/kv_cache_manager.py#L257"
+      }
+    ],
+    "04": [
+      {
+        "file": "vllm/v1/core/sched/scheduler.py",
+        "symbol": "Scheduler.schedule",
+        "line": 348,
+        "end_line": 949,
+        "sha256": "9f3da2dfce94963e1e1cefc156e4239120f79c6eaf824b2829cac0ee7736b58a",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/v1/core/sched/scheduler.py#L348"
+      }
+    ],
+    "05": [
+      {
+        "file": "vllm/v1/core/kv_cache_manager.py",
+        "symbol": "KVCacheManager.get_computed_blocks",
+        "line": 176,
+        "end_line": 216,
+        "sha256": "0df69b7626195cbaabb33013d1e05ba6660243369171367f87313e4221bfffc8",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/v1/core/kv_cache_manager.py#L176"
+      },
+      {
+        "file": "vllm/v1/core/block_pool.py",
+        "symbol": "BlockPool.get_cached_block",
+        "line": 183,
+        "end_line": 208,
+        "sha256": "2ea932628ac6a06607dd48ded7a908f705b55c3eb6801232264ee2db142c6cd9",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/v1/core/block_pool.py#L183"
+      },
+      {
+        "file": "vllm/v1/core/block_pool.py",
+        "symbol": "BlockPool.cache_full_blocks",
+        "line": 210,
+        "end_line": 318,
+        "sha256": "2ea932628ac6a06607dd48ded7a908f705b55c3eb6801232264ee2db142c6cd9",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/v1/core/block_pool.py#L210"
+      }
+    ],
+    "06": [
+      {
+        "file": "vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors.py",
+        "symbol": "CompressedTensorsConfig.get_quant_method",
+        "line": 155,
+        "end_line": 188,
+        "sha256": "4ece972883cdea8aacf07279865ad54c0c710764c55f35ae89c3e9c57c51e486",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors.py#L155"
+      },
+      {
+        "file": "vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors.py",
+        "symbol": "CompressedTensorsLinearMethod.apply",
+        "line": 906,
+        "end_line": 921,
+        "sha256": "4ece972883cdea8aacf07279865ad54c0c710764c55f35ae89c3e9c57c51e486",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors.py#L906"
+      },
+      {
+        "file": "vllm/model_executor/layers/linear.py",
+        "symbol": "LinearBase.__init__",
+        "line": 245,
+        "end_line": 276,
+        "sha256": "db35d8070e734f2a5d4f705213bcc30a44cab2642c4d29cefd83a14339bef346",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/model_executor/layers/linear.py#L245"
+      }
+    ],
+    "defaults": [
+      {
+        "file": "vllm/engine/arg_utils.py",
+        "symbol": "EngineArgs._set_default_chunked_prefill_and_prefix_caching_args",
+        "line": 2107,
+        "end_line": 2178,
+        "sha256": "b576b4e3156e7669857e2ed6cbd9a4ac50062472501bc39a80d3642991b5f362",
+        "url": "https://github.com/vllm-project/vllm/blob/2a69949bdadf0e8942b7a1619b229cb475beef20/vllm/engine/arg_utils.py#L2107"
+      }
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+<div id="lesson-__ID__">
+  <h3>__TITLE__</h3>
+  <div class="viz-row"><span class="viz-badge">__KIND__ · 非 GPU 实测</span></div>
+  <div class="viz-controls" data-controls></div>
+  <div data-status role="status" aria-live="polite"></div>
+  <div data-lanes></div>
+  <div class="table-responsive"><table class="table table-sm"><thead><tr><th>指标</th><th class="text-end">数值</th><th>单位</th></tr></thead><tbody data-metrics></tbody></table></div>
+  <details><summary>实验假设与边界</summary><p data-assumptions></p></details>
+  <details><summary>逐步数据</summary><div class="table-responsive" data-detail></div></details>
+  <style>
+    #lesson-__ID__ [data-controls] { margin-block: 12px; }
+    #lesson-__ID__ .lesson-lane { margin-block: 12px; }
+    #lesson-__ID__ .lesson-lane-header { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; }
+    #lesson-__ID__ .lesson-track { display:flex; height:22px; background:color-mix(in srgb, var(--foreground) 6%, transparent); margin-block:4px; }
+    #lesson-__ID__ .lesson-segment { height:100%; transition:width .15s; }
+    #lesson-__ID__ .lesson-key { display:inline-block; width:10px; height:10px; margin-inline-end:4px; }
+    #lesson-__ID__ .lesson-legend { display:flex; flex-wrap:wrap; gap:8px; }
+    #lesson-__ID__ td, #lesson-__ID__ th { overflow-wrap:anywhere; }
+    @media (prefers-reduced-motion: reduce) { #lesson-__ID__ .lesson-segment { transition:none; } }
+  </style>
+  <script type="application/json" data-presets>__PAYLOAD__</script>
+  <script>
+  (() => {
+    const root=document.getElementById('lesson-__ID__');
+    const bundle=JSON.parse(root.querySelector('[data-presets]').textContent);
+    const controls=root.querySelector('[data-controls]');
+    const format=n=>Number.isInteger(n)?String(n):Number(n).toLocaleString('en-US',{maximumSignificantDigits:6});
+    for(const [key,entry] of Object.entries(bundle.spec.params)) {
+      const label=document.createElement('label'); label.className='form-label';
+      label.append(document.createTextNode(entry[0]));
+      const select=document.createElement('select'); select.className='form-select'; select.name=key;
+      for(const value of entry[1]) {const option=document.createElement('option'); option.value=String(value); option.textContent=String(value); option.selected=value===entry[2]; select.append(option);}
+      label.append(select); controls.append(label); select.addEventListener('change',draw);
+    }
+    function table(headers,rows) {
+      const t=document.createElement('table'); t.className='table table-sm';
+      const head=t.createTHead().insertRow();
+      for(const h of headers){const th=document.createElement('th');th.textContent=h;head.append(th);}
+      const body=t.createTBody();
+      for(const row of rows){const tr=body.insertRow();for(const val of row){tr.insertCell().textContent=typeof val==='number'?format(val):String(val);}}
+      return t;
+    }
+    function draw() {
+      const params=Object.fromEntries([...controls.querySelectorAll('select')].map(x=>[x.name,Number(x.value)]));
+      const record=bundle.records.find(x=>Object.keys(params).every(k=>x.parameters[k]===params[k]));
+      if(!record)throw new Error('Missing preset');
+      root.dataset.result=JSON.stringify(record);
+      root.querySelector('[data-status]').textContent=record.data.status==='blocked-budget'?'教学调度无法完成：未切分的长输入超过预算。':record.data.bottleneck_bound?`较紧的理论上界：${record.data.bottleneck_bound}`:'';
+      root.querySelector('[data-assumptions]').textContent=record.assumptions;
+      const lanes=root.querySelector('[data-lanes]'); lanes.replaceChildren();
+      const domain=Math.max(1e-12,...record.view.lanes.map(x=>x.segments.reduce((a,s)=>a+s.value,0)));
+      const names=[...new Set(record.view.lanes.flatMap(x=>x.segments.map(s=>s.label)))];
+      const colors=Object.fromEntries(names.map((n,i)=>[n,`var(--viz-series-${i%6+1})`]));
+      for(const lane of record.view.lanes){
+        const wrap=document.createElement('div'); wrap.className='lesson-lane';
+        const title=document.createElement('div'); title.className='lesson-lane-header';
+        const name=document.createElement('span'); name.textContent=lane.label;
+        const value=document.createElement('span');value.className='tabular-nums';value.textContent=`${format(lane.segments.reduce((a,s)=>a+s.value,0))} ${lane.unit}`;
+        title.append(name,value); wrap.append(title);
+        const track=document.createElement('div');track.className='lesson-track';track.setAttribute('role','img');
+        track.setAttribute('aria-label',lane.label+': '+lane.segments.map(s=>s.label+' '+format(s.value)+' '+lane.unit).join(', '));
+        for(const seg of lane.segments){const mark=document.createElement('div');mark.className='lesson-segment';mark.style.width=(seg.value/domain*100)+'%';mark.style.background=colors[seg.label];track.append(mark);}
+        wrap.append(track);
+        const legend=document.createElement('div');legend.className='lesson-legend text-small';
+        for(const seg of lane.segments){const text=document.createElement('span');const swatch=document.createElement('span');swatch.className='lesson-key';swatch.style.background=colors[seg.label];text.append(swatch,document.createTextNode(`${seg.label} ${format(seg.value)} ${lane.unit}`));legend.append(text);}
+        wrap.append(legend); lanes.append(wrap);
+      }
+      const body=root.querySelector('[data-metrics]'); body.replaceChildren();
+      for(const m of record.view.metrics){const row=body.insertRow();row.insertCell().textContent=m.label;const v=row.insertCell();v.className='text-end tabular-nums';v.textContent=format(m.value);row.insertCell().textContent=m.unit;}
+      const detail=root.querySelector('[data-detail]');detail.replaceChildren();
+      if(record.lesson_id==='06')detail.append(table(['元素','原值','反量化','整数码'],record.data.original.map((x,i)=>[i,x,record.data.dequantized[i],record.data.codes[i]])));
+      else if(record.lesson_id==='04')detail.append(table(['轮次','预算消耗','事件'],record.data.trace.map(x=>[x.step,x.used_tokens,x.events.map(e=>`${e.id} ${e.phase}×${e.tokens}`).join(' / ')])));
+      else if(record.lesson_id==='05')detail.append(table(['请求','命中 tokens','需计算 tokens'],record.data.requests.map(x=>[x.request,x.hit_tokens,x.recompute_tokens])));
+      else detail.append(table(['参数','值'],Object.entries(record.parameters)));
+    }
+    draw();
+  })();
+  </script>
+</div>

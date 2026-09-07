@@ -187,9 +187,22 @@ def main():
     s.add_argument('--duration', type=float, required=True)
     c = sub.add_parser('compare')
     c.add_argument('records', type=Path)
+    lesson = sub.add_parser('lesson', help='CPU-only guided lesson (01..06)')
+    lesson.add_argument('--id', required=True, choices=['01','02','03','04','05','06'])
+    lesson.add_argument('--set', action='append', default=[], metavar='NAME=VALUE', help='Repeat for lesson-specific preset parameters; see --params')
+    lesson.add_argument('--params', action='store_true', help='Show valid parameters and defaults')
     a = parser.parse_args()
     try:
-        if a.command == 'kv':
+        if a.command == 'lesson':
+            from lessons import SPECS, run
+            overrides = {}
+            for assignment in a.set:
+                key, value = assignment.split('=', 1)
+                if key in overrides:
+                    raise ValueError(f'duplicate parameter: {key}')
+                overrides[key] = int(value)
+            result = SPECS[a.id] if a.params else run(a.id, overrides)
+        elif a.command == 'kv':
             n = kv_bytes(a.layers, a.kv_heads, a.head_dim, a.tokens, a.batch, a.bytes)
             result = {'kind': 'analytical-estimate', 'raw_kv_bytes': n, 'raw_kv_gib': n / 2**30,
                       'scope': 'Uniform full-attention logical KV only; excludes weights, state, scales, padding, workspace and TP replication.'}
