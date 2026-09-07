@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+.DS_Store
+.env
+.env.*
+!.env.example
+local/
+artifacts/
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.nsys-rep
+*.ncu-rep
+benchmarks/results/raw/

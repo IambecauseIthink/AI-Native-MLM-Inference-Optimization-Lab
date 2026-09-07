@@ -1,0 +1,96 @@
+[
+  {
+    "id": "baseline",
+    "role": "baseline",
+    "kind": "synthetic",
+    "contract": {
+      "model_lineage": "synthetic-model",
+      "dataset_sha256": "synthetic-fixture-not-a-real-hash",
+      "evaluator_sha256": "synthetic-evaluator",
+      "runtime_commit": "synthetic-runtime",
+      "hardware": "synthetic-GPU",
+      "gpu_count": 1,
+      "workload": {
+        "arrival": "closed-loop",
+        "concurrency": 4,
+        "max_tokens": 128
+      },
+      "sampling": {
+        "seed": 42,
+        "temperature": 0
+      },
+      "measurement": {
+        "warmup": 10,
+        "rounds": 3,
+        "protocol": "synthetic-demo"
+      },
+      "quality_gate": {
+        "metric": "accuracy",
+        "direction": "higher",
+        "loss_mode": "relative",
+        "max_loss": 0.01
+      }
+    },
+    "expected": 30,
+    "succeeded": 30,
+    "failed": 0,
+    "rounds": 3,
+    "exit_code": 0,
+    "evidence": "synthetic-fixture",
+    "quality_evidence": "synthetic-quality",
+    "fallback": false,
+    "quality_slices_passed": true,
+    "slo_passed": true,
+    "quality": 0.9,
+    "qps": 10,
+    "e2e_p99_ms": 100,
+    "peak_gpu_gib": 10
+  },
+  {
+    "id": "candidate",
+    "role": "candidate",
+    "kind": "synthetic",
+    "contract": {
+      "model_lineage": "synthetic-model",
+      "dataset_sha256": "synthetic-fixture-not-a-real-hash",
+      "evaluator_sha256": "synthetic-evaluator",
+      "runtime_commit": "synthetic-runtime",
+      "hardware": "synthetic-GPU",
+      "gpu_count": 1,
+      "workload": {
+        "arrival": "closed-loop",
+        "concurrency": 4,
+        "max_tokens": 128
+      },
+      "sampling": {
+        "seed": 42,
+        "temperature": 0
+      },
+      "measurement": {
+        "warmup": 10,
+        "rounds": 3,
+        "protocol": "synthetic-demo"
+      },
+      "quality_gate": {
+        "metric": "accuracy",
+        "direction": "higher",
+        "loss_mode": "relative",
+        "max_loss": 0.01
+      }
+    },
+    "expected": 30,
+    "succeeded": 30,
+    "failed": 0,
+    "rounds": 3,
+    "exit_code": 0,
+    "evidence": "synthetic-fixture",
+    "quality_evidence": "synthetic-quality",
+    "fallback": false,
+    "quality_slices_passed": true,
+    "slo_passed": true,
+    "quality": 0.9,
+    "qps": 12,
+    "e2e_p99_ms": 100,
+    "peak_gpu_gib": 10
+  }
+]
